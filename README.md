@@ -1,6 +1,6 @@
-# untitled
+# klinik_app - Pertemuan 3
 
-A new Flutter project.
+A new Flutter project for Klinik Application.
 
 ## Getting Started
 
