@@ -17,14 +17,17 @@ class _PoliPageState extends State<PoliPage> {
       appBar: AppBar(
         title: const Text("Data Poli"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PoliForm()),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PoliForm()),
+                );
+              },
+            ),
           ),
         ],
       ),
