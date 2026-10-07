@@ -1,4 +1,4 @@
-# klinik_app - Pertemuan 3
+# klinik_app
 
 A new Flutter project for Klinik Application.
 
