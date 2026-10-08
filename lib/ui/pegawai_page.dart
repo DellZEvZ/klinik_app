@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/pegawai.dart';
 import 'pegawai_item.dart';
+import 'pegawai_form.dart';
 
 class PegawaiPage extends StatefulWidget {
   const PegawaiPage({super.key});
@@ -19,7 +20,10 @@ class _PegawaiPageState extends State<PegawaiPage> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Navigator ke form tambah pegawai jika ada
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PegawaiForm()),
+              );
             },
           )
         ],

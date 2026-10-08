@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/pasien.dart';
 import 'pasien_page.dart';
+import 'pasien_update_form.dart';
 
 class PasienDetail extends StatefulWidget {
   final Pasien pasien;
@@ -59,7 +60,12 @@ class _PasienDetailState extends State<PasienDetail> {
   Widget _tombolUbah() {
     return ElevatedButton(
       onPressed: () {
-        // Ke form ubah pasien
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PasienUpdateForm(pasien: widget.pasien),
+          ),
+        );
       },
       style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
       child: const Text("Ubah"),
