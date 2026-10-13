@@ -20,6 +20,7 @@ class _PoliDetailState extends State<PoliDetail> {
       body: Column(
         children: [
           const SizedBox(height: 20),
+          Text("ID : ${widget.poli.id ?? '-'}", style: const TextStyle(fontSize: 20)),
           Text(
             "Nama Poli : ${widget.poli.namaPoli}",
             style: const TextStyle(fontSize: 20),

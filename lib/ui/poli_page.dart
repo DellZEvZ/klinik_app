@@ -33,10 +33,10 @@ class _PoliPageState extends State<PoliPage> {
       ),
       body: ListView(
         children: [
-          PoliItem(poli: Poli(namaPoli: "Poli Anak")),
-          PoliItem(poli: Poli(namaPoli: "Poli Kandungan")),
-          PoliItem(poli: Poli(namaPoli: "Poli Gigi")),
-          PoliItem(poli: Poli(namaPoli: "Poli THT")),
+          PoliItem(poli: Poli(namaPoli: "Poli Anak", id: "666")),
+          PoliItem(poli: Poli(namaPoli: "Poli Kandungan", id: "777")),
+          PoliItem(poli: Poli(namaPoli: "Poli Gigi", id: "888")),
+          PoliItem(poli: Poli(namaPoli: "Poli THT", id: "999")),
         ],
       ),
     );

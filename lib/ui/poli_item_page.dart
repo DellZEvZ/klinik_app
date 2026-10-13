@@ -11,7 +11,7 @@ class PoliItemPage extends StatelessWidget {
     return GestureDetector(
       child: Card(
         child: ListTile(
-          title: Text("${poli.namaPoli}"),
+          title: Text("${poli.id ?? '-'} ${poli.namaPoli}"),
         ),
       ),
       onTap: () {
