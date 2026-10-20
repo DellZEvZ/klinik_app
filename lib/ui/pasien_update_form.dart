@@ -101,6 +101,7 @@ class _PasienUpdateFormState extends State<PasienUpdateForm> {
           nomorTelepon: _nomorTeleponCtrl.text,
           alamat: _alamatCtrl.text,
         );
+        Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PasienDetail(pasien: pasien)),

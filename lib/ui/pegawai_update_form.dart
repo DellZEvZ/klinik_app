@@ -113,6 +113,7 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
           email: _emailCtrl.text,
           password: _passwordCtrl.text,
         );
+        Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PegawaiDetail(pegawai: pegawai)),

@@ -59,7 +59,8 @@ class _PoliUpdateFormState extends State<PoliUpdateForm> {
   Widget _tombolSimpan() {
     return ElevatedButton(
       onPressed: () {
-        Poli poli = Poli(namaPoli: _namaPoliCtrl.text);
+        Poli poli = Poli(id: widget.poli.id, namaPoli: _namaPoliCtrl.text);
+        Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)),

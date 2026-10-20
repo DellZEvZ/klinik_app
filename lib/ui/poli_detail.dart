@@ -45,7 +45,7 @@ class _PoliDetailState extends State<PoliDetail> {
           ),
         );
       },
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
       child: const Text("Ubah"),
     );
   }
