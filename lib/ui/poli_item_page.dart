@@ -10,9 +10,7 @@ class PoliItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Card(
-        child: ListTile(
-          title: Text("${poli.id ?? '-'} ${poli.namaPoli}"),
-        ),
+        child: ListTile(title: Text("${poli.id ?? '-'} ${poli.namaPoli}")),
       ),
       onTap: () {
         Navigator.push(

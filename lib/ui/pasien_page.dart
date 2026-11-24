@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../model/pasien.dart';
-import 'pasien_item.dart';
+import '../service/pasien_service.dart';
+import '../widget/sidebar.dart';
 import 'pasien_form.dart';
+import 'pasien_item.dart';
 
 class PasienPage extends StatefulWidget {
   const PasienPage({super.key});
@@ -11,46 +13,49 @@ class PasienPage extends StatefulWidget {
 }
 
 class _PasienPageState extends State<PasienPage> {
+  Future<List<Pasien>> getList() async {
+    return await PasienService().listData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Sidebar(),
       appBar: AppBar(
         title: const Text("Data Pasien"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PasienForm()),
-              );
-            },
-          )
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PasienForm()),
+                );
+              },
+            ),
+          ),
         ],
       ),
-      body: ListView(
-        children: [
-          PasienItem(
-            pasien: Pasien(
-              id: 1,
-              nomorRm: "RM-001",
-              nama: "Rio Adiansyah",
-              tanggalLahir: "2006-08-16",
-              nomorTelepon: "085875011617",
-              alamat: "Jln plk No. 18 Kecamatan Pancoran Jakarta Selatan",
-            ),
-          ),
-          PasienItem(
-            pasien: Pasien(
-              id: 2,
-              nomorRm: "RM-002",
-              nama: "Budi Santoso",
-              tanggalLahir: "1985-12-20",
-              nomorTelepon: "08123456780",
-              alamat: "Jln. Merdeka No. 5",
-            ),
-          ),
-        ],
+      body: FutureBuilder<List<Pasien>>(
+        future: getList(),
+        builder: (context, AsyncSnapshot<List<Pasien>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text(snapshot.error.toString()));
+          }
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("Data kosong"));
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) =>
+                PasienItem(pasien: snapshot.data![index]),
+          );
+        },
       ),
     );
   }

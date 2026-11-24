@@ -11,15 +11,14 @@ class PegawaiItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Card(
-        child: ListTile(
-          title: Text(pegawai.nama),
-          subtitle: Text(pegawai.nip),
-        ),
+        child: ListTile(title: Text(pegawai.nama), subtitle: Text(pegawai.nip)),
       ),
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PegawaiDetail(pegawai: pegawai)),
+          MaterialPageRoute(
+            builder: (context) => PegawaiDetail(pegawai: pegawai),
+          ),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/poli.dart';
+import '../service/poli_service.dart';
 import 'poli_detail.dart';
 
 class PoliForm extends StatefulWidget {
@@ -50,11 +51,22 @@ class _PoliFormState extends State<PoliForm> {
 
   Widget _tombolSimpan() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         Poli poli = Poli(namaPoli: _namaPoliCtrl.text);
+        Poli hasil;
+        try {
+          hasil = await PoliService().simpan(poli);
+        } catch (e) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Gagal menyimpan: $e')));
+          return;
+        }
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)),
+          MaterialPageRoute(builder: (context) => PoliDetail(poli: hasil)),
         );
       },
       child: const Text("Simpan"),

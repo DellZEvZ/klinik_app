@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import './ui/pasien_page.dart';
-import './ui/poli_page.dart';
+import './helpers/user_info.dart';
+import './ui/beranda.dart';
+import './ui/login.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Sudah login (ada token tersimpan) -> Beranda, kalau belum -> Login.
+  final token = await UserInfo().getToken();
+  runApp(MyApp(sudahLogin: token != null));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool sudahLogin;
+  const MyApp({super.key, required this.sudahLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
-      home: PoliPage(),
+      home: sudahLogin ? Beranda() : Login(),
     );
   }
 }

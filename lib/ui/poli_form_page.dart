@@ -14,30 +14,35 @@ class _PoliFormPageState extends State<PoliFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tambah Poli"),),
+      appBar: AppBar(title: Text("Tambah Poli")),
       body: SingleChildScrollView(
         child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                _fieldNamaPoli(),
-                SizedBox(height: 20,),
-                _tombolSimpan()
-              ],
-            )),
+          key: _formKey,
+          child: Column(
+            children: [_fieldNamaPoli(), SizedBox(height: 20), _tombolSimpan()],
+          ),
+        ),
       ),
     );
   }
+
   _fieldNamaPoli() {
     return TextField(
       decoration: InputDecoration(labelText: "Nama Poli"),
       controller: _namaPoliCtrl,
     );
   }
+
   _tombolSimpan() {
-    return ElevatedButton(onPressed: () {
-      Poli poli = Poli(namaPoli: _namaPoliCtrl.text);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)));
-    }, child: Text("Simpan"));
+    return ElevatedButton(
+      onPressed: () {
+        Poli poli = Poli(namaPoli: _namaPoliCtrl.text);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PoliDetail(poli: poli)),
+        );
+      },
+      child: Text("Simpan"),
+    );
   }
 }

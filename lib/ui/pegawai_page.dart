@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../model/pegawai.dart';
-import 'pegawai_item.dart';
+import '../service/pegawai_service.dart';
+import '../widget/sidebar.dart';
 import 'pegawai_form.dart';
+import 'pegawai_item.dart';
 
 class PegawaiPage extends StatefulWidget {
   const PegawaiPage({super.key});
@@ -11,48 +13,49 @@ class PegawaiPage extends StatefulWidget {
 }
 
 class _PegawaiPageState extends State<PegawaiPage> {
+  Future<List<Pegawai>> getList() async {
+    return await PegawaiService().listData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Sidebar(),
       appBar: AppBar(
         title: const Text("Data Pegawai"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PegawaiForm()),
-              );
-            },
-          )
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PegawaiForm()),
+                );
+              },
+            ),
+          ),
         ],
       ),
-      body: ListView(
-        children: [
-          PegawaiItem(
-            pegawai: Pegawai(
-              id: 1,
-              nip: "12345",
-              nama: "Ucup Margonda",
-              tanggalLahir: "1990-01-01",
-              nomorTelepon: "08123456789",
-              email: "ucup@gmail.com",
-              password: "123",
-            ),
-          ),
-          PegawaiItem(
-            pegawai: Pegawai(
-              id: 2,
-              nip: "12346",
-              nama: "Deli Kurniawan",
-              tanggalLahir: "1992-05-10",
-              nomorTelepon: "08129876543",
-              email: "deli@gmail.com",
-              password: "123",
-            ),
-          ),
-        ],
+      body: FutureBuilder<List<Pegawai>>(
+        future: getList(),
+        builder: (context, AsyncSnapshot<List<Pegawai>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text(snapshot.error.toString()));
+          }
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("Data kosong"));
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) =>
+                PegawaiItem(pegawai: snapshot.data![index]),
+          );
+        },
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/pegawai.dart';
+import '../service/pegawai_service.dart';
 import 'pegawai_detail.dart';
 
 class PegawaiUpdateForm extends StatefulWidget {
@@ -49,7 +50,7 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
                 _fieldEmail(),
                 _fieldPassword(),
                 const SizedBox(height: 20),
-                _tombolSimpan()
+                _tombolSimpan(),
               ],
             ),
           ),
@@ -103,7 +104,7 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
 
   Widget _tombolSimpan() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         Pegawai pegawai = Pegawai(
           id: widget.pegawai.id,
           nip: _nipCtrl.text,
@@ -113,10 +114,23 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
           email: _emailCtrl.text,
           password: _passwordCtrl.text,
         );
+        Pegawai hasil;
+        try {
+          hasil = await PegawaiService().ubah(pegawai, widget.pegawai.id!);
+        } catch (e) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Gagal menyimpan: $e')));
+          return;
+        }
+        if (!mounted) return;
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => PegawaiDetail(pegawai: pegawai)),
+          MaterialPageRoute(
+            builder: (context) => PegawaiDetail(pegawai: hasil),
+          ),
         );
       },
       child: const Text("Simpan Perubahan"),
